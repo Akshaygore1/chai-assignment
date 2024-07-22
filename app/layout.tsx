@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Image from "next/image";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className + "p-10"}>
+        {children}
+        <Link
+          href={"https://chaicode.com/"}
+          className="absolute bottom-4 right-4 p-10"
+        >
+          <Image src="/logo.svg" alt="Logo" width={100} height={100} />
+        </Link>
+      </body>
     </html>
   );
 }
