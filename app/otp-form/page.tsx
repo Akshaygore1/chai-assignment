@@ -1,5 +1,5 @@
 import Container from "../_components/Container";
-import Header from "../_components/Header";
+import Header from "../_components/ui/Header";
 import OtpComponent from "../_components/OtpComponent";
 
 export default function Page() {

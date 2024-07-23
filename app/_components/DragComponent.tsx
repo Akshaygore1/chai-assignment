@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
+import { Badge } from "./ui/Badge";
 
 interface DragComponentProps {
   imageSrc: string;
@@ -47,11 +48,7 @@ export default function DragComponent({
       <div className="px-4 flex-shrink-0">
         <div className="text-lg font-normal">{price}</div>
       </div>
-      {badgeText && (
-        <div className="bg-[#DBFFCE] rounded-md border-black border p-1 px-2 flex-shrink-0">
-          <div className="text-md font-normal">{badgeText}</div>
-        </div>
-      )}
+      {badgeText && <Badge badgeText={badgeText} />}
       <div className="relative inline-block w-10 p-2">
         <div
           className="flex flex-col items-center cursor-pointer"

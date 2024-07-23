@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Container from "../_components/Container";
 import DragComponent from "../_components/DragComponent";
-import Header from "../_components/Header";
-import Sixdots from "../_components/Sixdots";
+import Header from "../_components/ui/Header";
+import Sixdots from "../_components/ui/Sixdots";
 
 const initialData = [
   {
