@@ -22,7 +22,7 @@ export default function RootLayout({
         {children}
         <Link
           href={"https://chaicode.com/"}
-          className="absolute bottom-4 right-4 p-10"
+          className=" fixed bottom-4 right-4 p-10"
         >
           <Image src="/logo.svg" alt="Logo" width={100} height={100} />
         </Link>
