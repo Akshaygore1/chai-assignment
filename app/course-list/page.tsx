@@ -40,10 +40,10 @@ const initialData = [
 
 export default function Page() {
   const [items, setItems] = useState(initialData);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMenu = (index: number) => {
+    setOpenMenuIndex(openMenuIndex === index ? null : index);
   };
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
@@ -112,6 +112,8 @@ export default function Page() {
                 onMoveToBottom={() => handleMoveToBottom(index)}
                 onRemove={() => handleRemove(index)}
                 SixdotsComponent={Sixdots}
+                isOpen={openMenuIndex === index}
+                toggleMenu={() => toggleMenu(index)}
               />
             </div>
           ))}

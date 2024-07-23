@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 import { Badge } from "./ui/Badge";
+import { useRef, useEffect } from "react";
 
 interface DragComponentProps {
   imageSrc: string;
@@ -13,8 +13,8 @@ interface DragComponentProps {
   onMoveToBottom?: () => void;
   onRemove?: () => void;
   SixdotsComponent?: React.ComponentType;
-  openMenu?: boolean;
-  toggleMenu?: () => void;
+  isOpen: boolean;
+  toggleMenu: () => void;
 }
 
 export default function DragComponent({
@@ -26,11 +26,31 @@ export default function DragComponent({
   onMoveToBottom,
   onRemove,
   SixdotsComponent = () => null,
+  isOpen,
+  toggleMenu,
 }: DragComponentProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        toggleMenu();
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, toggleMenu]);
+
+  const handleMenuClick = (e: React.MouseEvent, action: () => void) => {
+    e.stopPropagation();
+    action();
+    toggleMenu();
   };
 
   return (
@@ -52,18 +72,24 @@ export default function DragComponent({
       <div className="relative inline-block w-10 p-2">
         <div
           className="flex flex-col items-center cursor-pointer"
-          onClick={toggleMenu}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleMenu();
+          }}
         >
           <div className="w-2 h-2 bg-gray-800 rounded-full mb-0.5"></div>
           <div className="w-2 h-2 bg-gray-800 rounded-full mb-0.5"></div>
           <div className="w-2 h-2 bg-gray-800 rounded-full mb-0.5"></div>
         </div>
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+          <div
+            ref={menuRef}
+            className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
+          >
             {onMoveToTop && (
               <div
                 className="py-2 px-4 hover:bg-gray-100 cursor-pointer flex items-center space-x-2"
-                onClick={onMoveToTop}
+                onClick={(e) => handleMenuClick(e, onMoveToTop)}
               >
                 <ArrowUp size={16} className="text-gray-600" />
                 <span>Move To Top</span>
@@ -72,7 +98,7 @@ export default function DragComponent({
             {onMoveToBottom && (
               <div
                 className="py-2 px-4 hover:bg-gray-100 cursor-pointer flex items-center space-x-2"
-                onClick={onMoveToBottom}
+                onClick={(e) => handleMenuClick(e, onMoveToBottom)}
               >
                 <ArrowDown size={16} className="text-gray-600" />
                 <span>Move To Bottom</span>
@@ -81,7 +107,7 @@ export default function DragComponent({
             {onRemove && (
               <div
                 className="py-2 px-4 hover:bg-red-50 cursor-pointer flex items-center space-x-2 text-red-500"
-                onClick={onRemove}
+                onClick={(e) => handleMenuClick(e, onRemove)}
               >
                 <Trash2 size={16} className="text-red-500" />
                 <span>Remove</span>
