@@ -34,3 +34,18 @@ This project is a course management system built with Next.js, TypeScript, and T
 To get a local copy up and running, follow these steps:
 
 1. Clone the repository:
+   ```bash
+    https://github.com/Akshaygore1/chai-assignment.git
+   ```
+2. Run the app
+```bash
+cd chai-assignment
+npm install
+npm run dev
+```
+
+## Project Structure
+
+
+
+
