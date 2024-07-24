@@ -1,4 +1,4 @@
-# Next.js Course Management Project
+# Chai Aur Code Assignment
 
 This project is a course management system built with Next.js, TypeScript, and Tailwind CSS. It features three main pages: OTP verification, course list, and batches.
 
